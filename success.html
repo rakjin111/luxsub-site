@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Thanks!</title>
+  <style>body { font-family: sans-serif; background:#1e1e1e; color:#fff; display:flex; align-items:center; justify-content:center; height:100vh; } .box { text-align:center; max-width:400px; padding:20px; background:#2e2e2e; border-radius:12px; }</style>
+</head>
+<body>
+  <div class="box">
+    <h1>🎉 Payment Successful!</h1>
+    <p>We are notifying the admin now. Thanks!</p>
+  </div>
+  <script>
+    (function() {
+      const p = new URLSearchParams(location.search);
+      const quantity = p.get('quantity');
+      const link = decodeURIComponent(p.get('link'));
+      const price = p.get('price');
+
+      if (!quantity || !link || !price) return;
+
+      const msg = `✅ New Order!\n• Subs: ${quantity}\n• YT Channel: ${link}\n• Paid: $${price}`;
+      const TG = `https://api.telegram.org/botG565V4C-PQDMPEQ-KJ7PS0M-9Y57WMF/sendMessage?chat_id=5447989488&text=${encodeURIComponent(msg)}`;
+      fetch(TG).catch(console.error);
+    })();
+  </script>
+</body>
+</html>
