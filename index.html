@@ -98,7 +98,7 @@
     <button onclick="payCrypto()">Buy with Crypto</button>
 
     <div class="support">
-      Need help? <a href="https://t.me/YOUR_TELEGRAM_USERNAME" target="_blank">Message Support</a>
+      Need help? <a href="https://t.me/@rahi1111111" target="_blank">Message Support</a>
     </div>
   </div>
 
@@ -128,13 +128,13 @@
         pay_currency: "usdttrc20",
         order_id: "luxsub_" + Math.floor(Math.random() * 999999),
         order_description: `YT Subs Order: ${quantity} for ${link}`,
-        ipn_callback_url: "https://api.telegram.org/botYOUR_TELEGRAM_BOT_TOKEN/sendMessage?chat_id=YOUR_TELEGRAM_USER_ID&text=" + encodeURIComponent(`✅ New Order\nSubs: ${quantity}\nYT: ${link}\nPaid: $${priceUSD}`)
+        ipn_callback_url: "https://api.telegram.org/bot8118198363:AAETw_ZpnfnlNRyM3WT3GZw-iyQrfjs2JlE/sendMessage?chat_id=5447989488&text=" + encodeURIComponent(`✅ New Order\nSubs: ${quantity}\nYT: ${link}\nPaid: $${priceUSD}`)
       };
 
       const response = await fetch("https://api.nowpayments.io/v1/payment", {
         method: "POST",
         headers: {
-          "x-api-key": "YOUR_NOWPAYMENTS_API_KEY",
+          "x-api-key": "0xf233fd31c4af80aa02dfb7dbd213afb85f67b629",
           "Content-Type": "application/json"
         },
         body: JSON.stringify(body)
