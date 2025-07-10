@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LuxSub - Buy YouTube Subscribers</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #1e1e1e;
+      color: #fff;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      padding: 40px 10px;
+    }
+
+    .container {
+      max-width: 500px;
+      width: 100%;
+      background: #2e2e2e;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      margin-top: 15px;
+      display: block;
+      color: #ccc;
+    }
+
+    input[type="range"],
+    input[type="url"] {
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    .price-box {
+      background: #333;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background: #00b894;
+      border: none;
+      color: white;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #019875;
+    }
+
+    .support {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .support a {
+      color: #00bcd4;
+      text-decoration: none;
+    }
+
+    .support a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>LuxSub 🚀</h1>
+    
+    <label for="youtubeLink">Your YouTube Channel Link</label>
+    <input type="url" id="youtubeLink" placeholder="https://youtube.com/@yourchannel" required>
+
+    <label for="subsRange">Select Subscriber Quantity</label>
+    <input type="range" id="subsRange" min="100" max="10000" step="100" value="1000">
+    <p>Subscribers: <span id="subsAmount">1000</span></p>
+
+    <div class="price-box">
+      <p>Total Price: <strong>$<span id="price">5.00</span></strong></p>
+    </div>
+
+    <button onclick="payCrypto()">Buy with Crypto</button>
+
+    <div class="support">
+      Need help? <a href="https://t.me/YOUR_TELEGRAM_USERNAME" target="_blank">Message Support</a>
+    </div>
+  </div>
+
+  <script>
+    const subsRange = document.getElementById("subsRange");
+    const subsAmount = document.getElementById("subsAmount");
+    const priceOutput = document.getElementById("price");
+
+    subsRange.addEventListener("input", () => {
+      subsAmount.textContent = subsRange.value;
+      priceOutput.textContent = (subsRange.value * 0.005).toFixed(2);
+    });
+
+    async function payCrypto() {
+      const link = document.getElementById("youtubeLink").value.trim();
+      const quantity = subsRange.value;
+      const priceUSD = (quantity * 0.005).toFixed(2);
+
+      if (!link) {
+        alert("Please enter your YouTube channel link.");
+        return;
+      }
+
+      const body = {
+        price_amount: parseFloat(priceUSD),
+        price_currency: "usd",
+        pay_currency: "usdttrc20",
+        order_id: "luxsub_" + Math.floor(Math.random() * 999999),
+        order_description: `YT Subs Order: ${quantity} for ${link}`,
+        ipn_callback_url: "https://api.telegram.org/botYOUR_TELEGRAM_BOT_TOKEN/sendMessage?chat_id=YOUR_TELEGRAM_USER_ID&text=" + encodeURIComponent(`✅ New Order\nSubs: ${quantity}\nYT: ${link}\nPaid: $${priceUSD}`)
+      };
+
+      const response = await fetch("https://api.nowpayments.io/v1/payment", {
+        method: "POST",
+        headers: {
+          "x-api-key": "YOUR_NOWPAYMENTS_API_KEY",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+      });
+
+      const data = await response.json();
+      if (data.payment_url) {
+        window.location.href = data.payment_url;
+      } else {
+        alert("Payment error. Try again.");
+        console.log(data);
+      }
+    }
+  </script>
+</body>
+</html>
